@@ -85,7 +85,7 @@ namespace task
             cmd.CommandTimeout = this.CommandTimeout;
             cmd.Connection = _connection;
             if (_transaction != null) cmd.Transaction = _transaction;
-            //cmd.CommandText = sql;
+
             cmd.CommandType = CommandType.Text;
             da.GetFillParameters();
 
@@ -102,16 +102,13 @@ namespace task
 
         public dynamic ExecuteSP(SqlCommand cmd, CommandType commandType = CommandType.StoredProcedure, int timeOutSec = 90)
         {
-            // SqlCommand cmd = new SqlCommand();
             this.Connect();
             SqlDataAdapter da = new SqlDataAdapter();
             DataSet ds = new DataSet();
 
             try
             {
-                /// Modified BY     : THE KING
-                cmd.CommandTimeout = timeOutSec; /// this.CommandTimeout;
-                // cmd.CommandText = procedureName;
+                cmd.CommandTimeout = timeOutSec; 
                 cmd.Connection = _connection;
                 if (_transaction != null) cmd.Transaction = _transaction;
                 cmd.CommandType = commandType;
@@ -128,9 +125,6 @@ namespace task
                 if (this.AutoCloseConnection) this.Disconnect();
 
                 return ds;
-                //string JSONString = string.Empty;
-                //JSONString = JsonConvert.SerializeObject(ds);
-                //return JSONString;
             }
             catch (Exception ex) { return null; }
             finally
